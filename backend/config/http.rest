@@ -41,8 +41,8 @@ Content-Type: application/json
 
 {
         "email": "test2@test.com",
-        "password": "newPassword",
-        "newPassword": "newPassword123",
-        "confirmPassword": "newPassword123"
+        "password": "newPassword123",
+        "newPassword": "newPassword",
+        "confirmPassword": "newPassword"
 }
 

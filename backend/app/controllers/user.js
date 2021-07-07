@@ -59,7 +59,7 @@ module.exports = {
   updateUserPassword: async (id, data) => {
     try {
       var user = await module.exports.getUserByEmailAndPassword(data.email, data.password);
-      if (user=== -1) return -1;
+      if (!user._id) return -1;
       else {
         user = await User.findByIdAndUpdate(id, {
           $set: {
