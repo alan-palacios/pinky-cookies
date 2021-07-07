@@ -3,8 +3,8 @@ POST http://localhost:5000/login/login
 Content-Type: application/json
 
 {
-    "email": "test1@test.com",
-    "password": "password"
+        "email": "test2@test.com",
+        "password": "newPassword123"
 }
 
 ### Logout
@@ -19,64 +19,30 @@ POST http://localhost:5000/users/
 Content-Type: application/json
 
 {
-        "username": "usuario test 2",
-        "email": "test1@test.com",
-        "password": "password"
+        "username": "ADMIN",
+        "email": "admin@admin.com",
+        "password": "adminpsw"
 }
 
-### add visit
-POST http://localhost:5000/Visits/add
+### update user general info
+PATCH http://localhost:5000/users/60e399b5d18ab75ac0413bd3
 Content-Type: application/json
 
 {
-        "idInmueble": "60b978cd748d036a644410cb",
-        "fecha": "10/06/2021 12:23",
-        "estado": 1
+        "username": "usuario test principal modified",
+        "email": "test2@test.com",
+        "password": "password2342",
+        "picture": "someURLmodified"
 }
 
-### add inmueble
-POST http://localhost:5000/60bd2f7023c8ac5f7073a72b/Inmuebles/add
+### update user general info
+PATCH http://localhost:5000/users/password/60e399b5d18ab75ac0413bd3
 Content-Type: application/json
 
 {
-        "titulo": "Inmueble del otro usuario",
-        "direccion": "direccion test 2",
-        "precio": 30000,
-        "descripcion": "descripcion test 2",
-        "tipo": 0,
-        "recamaras": 4,
-        "banos": 1,
-        "estacionamientos": 1,
-        "terreno": 200,
-        "construccion":130, 
-        "edad": 5, 
-        "tipoTerreno": 1, 
-        "usoSuelo": 1,
-        "tipoPiso": 2,
-        "cocina":  0,
-        "piso": 0
-    }
-
-
-### update inmueble
-POST http://localhost:5000/Inmuebles/60b94fc00af17b63b0bf071a/update
-Content-Type: application/json
-
-{
-    "titulo": "titulo test 0",
-    "direccion": "direccion test 0",
-    "precio": 190099,
-    "descripcion": "descripcion test 0",
-    "tipo": 0,
-    "recamaras": 4,
-    "banos": 1,
-    "estacionamientos": 1,
-    "terreno": 200,
-    "construccion":130, 
-    "edad": 5, 
-    "tipoTerreno": 1, 
-    "usoSuelo": 1,
-    "tipoPiso": 2,
-    "cocina":  0,
-    "piso": 0
+        "email": "test2@test.com",
+        "password": "newPassword",
+        "newPassword": "newPassword123",
+        "confirmPassword": "newPassword123"
 }
+
