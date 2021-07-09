@@ -50,6 +50,16 @@ router.get('/:id', async (req, resp, next) => {
     }   
 });
 
+//delete user
+router.delete('/:id', async (req, resp, next) => {
+    if( req.session.user?._id===req.params.id || req.session.user?.type===3){
+        const response = await UserController.deleteUser(req.params.id);
+        return manageResponse(response, resp);
+    }else{
+        return resp.status(401).json({status:"error", description:"You must be logged and have the proper permissions"});
+    }
+});
+
 const manageResponse = (response,resp) =>{
     if(response === -3 || response === -2)
         return resp.status(500).json({status: "error", description: "Database connection error"});

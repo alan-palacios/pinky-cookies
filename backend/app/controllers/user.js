@@ -72,5 +72,15 @@ module.exports = {
       console.log(error);
       return -2;
     }
+  },
+  deleteUser: async (id) => {
+    try {
+      const user = await User.findByIdAndDelete(id, {select: "createdRecipes _id username email type"});
+      if (!user) return -1;
+      else return user;
+    } catch (error) {
+      console.log(error);
+      return -2;
+    }
   }
 };

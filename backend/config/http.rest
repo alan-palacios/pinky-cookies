@@ -3,8 +3,8 @@ POST http://localhost:5000/login/login
 Content-Type: application/json
 
 {
-        "email": "test2@test.com",
-        "password": "newPassword123"
+        "email": "admin@admin.com",
+        "password": "adminpsw"
 }
 
 ### Logout
@@ -19,9 +19,9 @@ POST http://localhost:5000/users/
 Content-Type: application/json
 
 {
-        "username": "ADMIN",
-        "email": "admin@admin.com",
-        "password": "adminpsw"
+        "username": "AMUGUS",
+        "email": "user4@user.com",
+        "password": "password"
 }
 
 ### update user general info
@@ -45,4 +45,7 @@ Content-Type: application/json
         "newPassword": "newPassword",
         "confirmPassword": "newPassword"
 }
+
+### delete user 
+DELETE http://localhost:5000/users/60e8dd4399e3ea695c70ad37 
 
