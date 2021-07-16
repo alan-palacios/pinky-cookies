@@ -1,10 +1,12 @@
 import './App.css';
-import { SignIn } from './components/sign-in/sign-in';
+import { Navbar } from './components/navbar/navbar';
+import Routes from './Routes';
 
 function App() {
   return (
     <div className="App">
-      <SignIn/>
+      <Navbar/>
+      <Routes/>
     </div>
   );
 }
