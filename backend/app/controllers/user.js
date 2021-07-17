@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 const User = require("../models/user");
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 module.exports = {
   
   getUserById: async function (id) {
@@ -17,13 +19,15 @@ module.exports = {
   },
   getUserByEmailAndPassword: async function (email, password) {
     try {
-      const userId = await User.findOne({ email, password }, "_id");
-        console.log("userId:"+userId);
-      if (!userId) return -1;
+      const userRecord = await User.findOne({ email }); 
+      if (!userRecord) return -1;
       else {
-        const user = await this.getUserById(userId._id);
-        if (user === -1 || user === -2) return -2;
-        else return user;
+        if(bcrypt.compareSync(password, userRecord.password)){
+          const user = await this.getUserById(userRecord._id);
+          if (user === -1 || user === -2) return -2;
+          else return user;      
+        }
+        return -1;
       }
     } catch (error) {
       console.log(error);
@@ -33,7 +37,9 @@ module.exports = {
   addUser: async (data) => {
     try {
       data.type = 1;
+      data.password = bcrypt.hashSync(data.password, 10);
       let user = await new User(data).save();
+      user = await module.exports.getUserById(user._id);
       return user;
     } catch (error) {
       console.log(error);

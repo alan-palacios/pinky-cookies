@@ -4,19 +4,23 @@ import  HttpClient  from "../../api/http-client";
 class LogIn extends React.Component {
   constructor(props) {
     super(props);
+    console.log(props);
     this.state = {
       email: "",
       password: "",
     };
   }
 
-  handleRegister = async (e) => {
+  handleLogIn = async (e) => {
     e.preventDefault();
-    console.log(this.state);
-
     HttpClient.post(`login/login`, this.state)
       .then((response) => {
-        console.log(response);
+        console.log(response.data);
+        if (response.data.user) {
+          this.props.globalLogin(response.data.user);
+        } else{
+          console.log("Login Error");
+        }
       })
       .catch((error) =>{
         console.error(error)
@@ -29,7 +33,7 @@ class LogIn extends React.Component {
           <div className="row">
             <h2>Log In</h2>
             <br></br>
-            <form onSubmit={this.handleRegister} className="col s12">
+            <form onSubmit={this.handleLogIn} className="col s12">
               <div className="input-field">
                 <input
                   type="email"
@@ -57,7 +61,6 @@ class LogIn extends React.Component {
                 Sign In
               </button>
               <br/>
-              <code>{JSON.stringify(this.state, null, 2)}</code>
             </form>
           </div>
         </div>

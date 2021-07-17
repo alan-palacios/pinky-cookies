@@ -6,6 +6,6 @@ prod = {
   db: "mongodb://localhost/pinkycookies",
 };
 
-env = "dev"; //process.env.NODE_ENV
+env = process.env.NODE_ENV || "dev"
 
-module.exports = (env === "prod")?prod:dev;
+module.exports = (env === "production")?prod:dev;

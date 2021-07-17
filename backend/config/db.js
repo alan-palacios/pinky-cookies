@@ -1,6 +1,5 @@
-const config = require('./config')
 const mongoose = require('mongoose');
-mongoose.connect(config.db, {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect(process.env.MONGO_DB_URI, {useNewUrlParser: true, useUnifiedTopology: true});
 const db = mongoose.connection;
 
 db.on('error', console.error.bind(console, 'connection error:'));
