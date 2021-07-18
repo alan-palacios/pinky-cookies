@@ -66,7 +66,7 @@ const manageResponse = (response,resp) =>{
     else if(response === -1)
         return resp.status(401).json({status: "error", description:"User not found"});
     else
-        return resp.header('Access-Control-Allow-Origin', '*').status(200).send({status: "ok", data: response});
+        return resp.status(200).send({status: "ok", data: response});
 }
 
 

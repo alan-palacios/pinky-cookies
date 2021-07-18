@@ -16,8 +16,17 @@ router.post('/login', async (req, resp, next) => {
             else{
                 req.session.user = response;
                 try{
-                    const saveSession = await req.session.save();
-                    return resp.status(200).json({status: "ok", user: response}).end();
+                    //const saveSession = await req.session.save();
+                    req.session.save(err => {
+                        if(err){
+                            console.log(err);
+                            return resp.status(500).json({status:"error",description:"Save session error"});
+                        } else {
+                            console.log(`login of user: ${req.session.user.username}`);
+                            return resp.status(200).json({status: "ok", user: response});
+                        }
+                    });
+                    
                 }catch(error){
                     console.log(error);
                     return resp.status(500).json({status:"error",description:"Save session error"});
@@ -30,9 +39,10 @@ router.post('/login', async (req, resp, next) => {
 });
 
 router.all('/logout', async (req, resp, next) =>{
+    console.log(req.session);
     if(req.session.user){
         try{
-            const destroySession = await req.session.destroy();
+            req.session.destroy();
             return resp.status(200).json({status:"ok"});
         }catch(error){
             console.log(error);

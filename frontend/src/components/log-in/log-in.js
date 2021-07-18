@@ -4,7 +4,6 @@ import  HttpClient  from "../../api/http-client";
 class LogIn extends React.Component {
   constructor(props) {
     super(props);
-    console.log(props);
     this.state = {
       email: "",
       password: "",
@@ -15,7 +14,6 @@ class LogIn extends React.Component {
     e.preventDefault();
     HttpClient.post(`login/login`, this.state)
       .then((response) => {
-        console.log(response.data);
         if (response.data.user) {
           this.props.globalLogin(response.data.user);
         } else{
@@ -26,6 +24,7 @@ class LogIn extends React.Component {
         console.error(error)
       })
   };
+
   render() {
     return (
       <React.Fragment>

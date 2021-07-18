@@ -5,22 +5,22 @@ class Profile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      user: {
+        username: '',
+        email: ''
+      }
     };
   }
-
-  handleRegister = async (e) => {
-    e.preventDefault();
-    console.log(this.state);
-
-    HttpClient.post(`users`, this.state)
+  componentDidMount() {
+    HttpClient.get(`users/${this.props.user._id}`)
       .then((response) => {
-        console.log(response);
+        this.setState({user: response.data.data});
       })
       .catch((error) =>{
         console.error(error)
       })
-  };
+  }
+
   render() {
     return (
       <React.Fragment>
@@ -29,6 +29,10 @@ class Profile extends React.Component {
             <h2>Profile</h2>
             <br></br>
             This is a private Profile 
+            <br/>
+            <span>{this.state.user?.username}</span>
+            <br/>
+            <span>{this.state.user?.email}</span>
           </div>
         </div>
       </React.Fragment>

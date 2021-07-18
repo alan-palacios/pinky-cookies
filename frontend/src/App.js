@@ -10,27 +10,31 @@ class App extends React.Component{
       isLoggedIn: false
     }
   }
-  componentDidMount() {
-    /*const token = Cookie.get("token") ? Cookie.get("token") : null;
-    if (token) {
+  componentWillMount() {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if(user){
       this.setState({ "isLoggedIn": true });
-    }*/
+      this.setState({user});
+    }
+    console.log(user);
   }
   globalLogin = (user) => {
     this.setState({ "isLoggedIn": true });
     console.log("Succesfull Login with user: ");
     this.setState({user});
+    localStorage.setItem('user', JSON.stringify(user));
 	  console.log(this.state.user);
   }
   globalLogout = () => {
     this.setState({ "isLoggedIn": false });
+    localStorage.clear();
   }
 
   render(){
     return (
       <div className="App">
-        <Navbar isLoggedIn={this.state.isLoggedIn} globalLogout={this.globalLogout}/>
-        <Routes isLoggedIn={this.state.isLoggedIn} globalLogin={this.globalLogin}/>
+        <Navbar  globalLogout={this.globalLogout} {...this.state}/>
+        <Routes  globalLogin={this.globalLogin} {...this.state}/>
       </div>
     );
   }

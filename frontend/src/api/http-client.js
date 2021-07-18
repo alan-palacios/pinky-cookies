@@ -16,7 +16,8 @@ const get = (url = '', headers = {}) => axios.get(readUrl(url), {
     Accept: 'application/json',
     'Content-Type': 'application/json',
     ...headers
-  }
+  },
+  withCredentials: true
 })
 
 const post = (url = '', body = {}, headers = {}) => axios.post(readUrl(url), body, {
@@ -24,7 +25,8 @@ const post = (url = '', body = {}, headers = {}) => axios.post(readUrl(url), bod
     Accept: 'application/json',
     'Content-Type': 'application/json',
     ...headers
-  }
+  },
+  withCredentials: true
 })
 
 const put = (url = '', body = {}, headers = {}) => axios.put(readUrl(url), body, {
@@ -32,7 +34,8 @@ const put = (url = '', body = {}, headers = {}) => axios.put(readUrl(url), body,
     Accept: 'application/json',
     'Content-Type': 'application/json',
     ...headers
-  }
+  },
+  withCredentials: true
 })
 
 const patch = (url = '', body = {}, headers = {}) => axios.patch(readUrl(url), body, {
@@ -40,7 +43,8 @@ const patch = (url = '', body = {}, headers = {}) => axios.patch(readUrl(url), b
     Accept: 'application/json',
     'Content-Type': 'application/json',
     ...headers
-  }
+  },
+  withCredentials: true
 })
 
 const del = (url = '', headers = {}) => axios.delete(readUrl(url), {
@@ -48,7 +52,8 @@ const del = (url = '', headers = {}) => axios.delete(readUrl(url), {
     Accept: 'application/json',
     'Content-Type': 'application/json',
     ...headers
-  }
+  },
+  withCredentials: true
 })
 
 const functions = {
