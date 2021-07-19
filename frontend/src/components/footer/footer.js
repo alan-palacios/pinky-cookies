@@ -1,7 +1,7 @@
 import React from "react";
 import  HttpClient  from "../../api/http-client";
 
-class Home extends React.Component {
+class Footer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -26,18 +26,20 @@ class Home extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <div className="container">
-          <div className="row">
-            <h3 className="grey-text text-darken-3 important-title">Recently Added</h3>
-              <div className="card">
-                <p>Hi, I'm a recipe lol</p>
+        <div>
+          <footer class="page-footer red lighten-4">
+            <div class="container">
+              <div class="row">
+                <div class="col l6 s12">
+                  <h5 class="white-text">Made by Souless Tyron and SaguiraBlack</h5>
+                  <br/>
+                </div>
               </div>
-            <h3 className="grey-text text-darken-3 important-title">Popular Recipes</h3>
-            <h3 className="grey-text text-darken-3 important-title">From Saguira's Kitchen</h3>
-          </div>
+            </div>
+          </footer>   
         </div>
       </React.Fragment>
     );
   }
 }
-export { Home };
+export { Footer };

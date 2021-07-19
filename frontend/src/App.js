@@ -1,5 +1,6 @@
 import React from "react";
 import './App.css';
+import { Footer } from "./components/footer/footer";
 import { Navbar } from './components/navbar/navbar';
 import Routes from './Routes';
 
@@ -35,6 +36,7 @@ class App extends React.Component{
       <div className="App">
         <Navbar  globalLogout={this.globalLogout} {...this.state}/>
         <Routes  globalLogin={this.globalLogin} {...this.state}/>
+        <Footer/>
       </div>
     );
   }
