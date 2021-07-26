@@ -88,5 +88,19 @@ module.exports = {
       console.log(error);
       return -2;
     }
+  },
+  updateUserRecipes: async (userId, recipeId) => {
+    try {
+      let user = await User.findByIdAndUpdate(userId, {
+          $push: {
+            createdRecipes:new mongoose.Types.ObjectId(recipeId) 
+          },
+        }, {new:true, select: "createdRecipes _id username email type"});
+      if(!user) return -1;
+      return user;
+    } catch (error) {
+      console.log(error);
+      return -2;
+    }
   }
 };

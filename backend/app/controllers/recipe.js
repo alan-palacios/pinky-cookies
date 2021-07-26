@@ -1,5 +1,6 @@
 const Recipe = require("../models/recipe");
 const HashtagController = require ("../controllers/hashtag");
+const UserController = require ("../controllers/user");
 module.exports = {
   
   /*getRecipeById: async function (id) {
@@ -41,11 +42,28 @@ module.exports = {
         username: user.username,
         picture: user.picture || "default picture url"
       };
-      data.hashtags.forEach( hashtag => {
-        
-      });
+
+      if(data.hashtags){
+        data.hashtags = data.hashtags.map( hashtag => hashtag.toLowerCase());
+        data.hashtags.forEach( async hashtag => {
+          let query = await HashtagController.getHashtagByName(hashtag);
+          if(query ===-1){
+            query = await HashtagController.addHashtag({name: hashtag});
+          }else if(query ===-2){
+            console.log(error);
+            return -2;
+          }else{
+            query = await HashtagController.updateHashtagByName(hashtag);
+          }
+        });
+      }
+
+
       let recipe = await new Recipe(data).save();
-      return recipe;
+
+      const recipeAdd = await UserController.updateUserRecipes(user._id, recipe._id);
+      if(user?._id) return recipe;
+      return user;
     } catch (error) {
       console.log(error);
       return -2;

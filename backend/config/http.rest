@@ -58,3 +58,32 @@ Content-Type: application/json
         "quantity": 3
 }
 
+### add recipe
+POST http://localhost:5000/recipes/
+Content-Type: application/json
+
+{
+    "title": "Recipe Without picture in some tag",
+    "prepTime": 30,
+    "calories": 300,
+    "yield": 1,
+    "presentation": "cup",
+    "description": "a simple Recipe example",
+    "public": true,
+    "picture": "recipe picture url",
+    "steps": [
+      {
+        "description": "first step",
+        "picture": "step picture url"
+      },
+      {
+        "description": "second step"
+      }
+    ],
+    "ingredients": [
+        "first ingredient","second ingredient","third ingredient","fourth ingredient"
+    ],
+    "hashtags":[
+            "dessert", "cake"
+    ]
+}
