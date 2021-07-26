@@ -42,7 +42,7 @@ module.exports = mongoose.model(
         ref: "users",
         required: true,
       },
-      name: {
+      username: {
         type: String,
         required: true,
       },
@@ -69,23 +69,15 @@ module.exports = mongoose.model(
         picture: {
           type: String,
         },
+        _id:{id:false}
       },
     ],
-    ingredients: [
-      {
-        quantity: {
-          type: Number,
-          required: true,
-        },
-        presentation: {
+    ingredients: [{
           type: String,
           required: true,
-        },
-        name: {
+      }],
+    hashtags: [{
           type: String,
-          required: true,
-        },
-      },
-    ],
+      }],
   })
 );
