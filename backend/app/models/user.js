@@ -25,5 +25,15 @@ module.exports = mongoose.model('users', new mongoose.Schema({
         min:1,
         max:3
     },
-    createdRecipes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'recipes'}]
+    createdRecipes:{
+        groupId:{ type: mongoose.Schema.Types.ObjectId, ref: 'recipesGroups'},
+        groupName: {type: String},
+        picture:{type: String}
+    },
+    likedRecipes:{
+        groupId:{ type: mongoose.Schema.Types.ObjectId, ref: 'recipesGroups'},
+        groupName: {type: String},
+        picture:{type: String}
+    },
+    recipesGroups:[{ type: mongoose.Schema.Types.ObjectId, ref: 'recipesGroups'}]
 }));

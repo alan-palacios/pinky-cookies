@@ -1,15 +1,12 @@
 const mongoose = require("mongoose");
-const User = require("../models/user");
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const recipesGroupController = require("./recipesGroup");
+const RecipesGroup = require("../models/recipesGroup");
 module.exports = {
-  
+ /* 
   getUserById: async function (id) {
     try {
       const user = await User.findOne(
         { _id: new mongoose.Types.ObjectId(id) },
-        "likedRecipes createdRecipes recipesGroups _id username email type"
+        "createdRecipes _id username email type"
       );
       if (!user) return -1;
       else return user;
@@ -34,56 +31,16 @@ module.exports = {
       console.log(error);
       return -3;
     }
-  },
-  addUser: async (data) => {
+  },*/
+  addRecipesGroup: async (data) => {
     try {
-      data.type = 1;
-      data.password = bcrypt.hashSync(data.password, 10);
-      data.picture = "default user picture";
-      let user = await new User(data).save();
-      user = user.toJSON();
-      user.userId = user._id;
-      //user = await module.exports.getUserById(user._id);
-
-      const likedRecipesObj = {
-        groupName: "Liked Recipes", 
-        type: 2,
-        public: false,
-        creator: user,
-        picture: "default group picture",
-        recipes: []
-      };
-      let likedGroup = await recipesGroupController.addRecipesGroup(likedRecipesObj);
-      if(likedGroup === -2)return -2;
-
-      const createdRecipesObj = {
-        groupName: "Created Recipes", 
-        type: 1,
-        public: false,
-        creator: user,
-        picture: "default group picture",
-        recipes: []
-      };
-      let createdGroup = await recipesGroupController.addRecipesGroup(createdRecipesObj);
-      if(createdGroup === -2)return -2;
-
-      createdGroup = createdGroup.toJSON();
-      likedGroup = likedGroup.toJSON();
-
-      createdGroup.groupId = createdGroup._id;
-      likedGroup.groupId = likedGroup._id;
-
-      user = await User.findByIdAndUpdate(user._id, 
-            {createdRecipes:createdGroup, likedRecipes:likedGroup},
-            {new:true, select: "likedRecipes createdRecipes recipesGroups _id username email type"} ) 
-      if(user === -2)return -2;
-
-      return user;
+      const recipesGroup = await new RecipesGroup(data).save();
+      return recipesGroup;
     } catch (error) {
       console.log(error);
       return -2;
     }
-  },
+  } /*,
   updateUser: async (id, data) => {
     try {
       const user = await User.findByIdAndUpdate(id, {
@@ -92,7 +49,7 @@ module.exports = {
           email: data.email,
           picture: data.picture,
         },
-      }, {new:true, select: "likedRecipes createdRecipes recipesGroups _id username email type"});
+      }, {new:true, select: "createdRecipes _id username email type"});
       if (!user) return -1;
       else return user;
     } catch (error) {
@@ -109,7 +66,7 @@ module.exports = {
           $set: {
             password: data.newPassword
           },
-        }, {new:true, select: "likedRecipes createdRecipes recipesGroups _id username email type"});
+        }, {new:true, select: "createdRecipes _id username email type"});
         return user;
       }
     } catch (error) {
@@ -119,7 +76,7 @@ module.exports = {
   },
   deleteUser: async (id) => {
     try {
-      const user = await User.findByIdAndDelete(id, {select: "likedRecipes createdRecipes recipesGroups _id username email type"});
+      const user = await User.findByIdAndDelete(id, {select: "createdRecipes _id username email type"});
       if (!user) return -1;
       else return user;
     } catch (error) {
@@ -133,12 +90,12 @@ module.exports = {
           $push: {
             createdRecipes:new mongoose.Types.ObjectId(recipeId) 
           },
-        }, {new:true, select: "likedRecipes createdRecipes recipesGroups _id username email type"});
+        }, {new:true, select: "createdRecipes _id username email type"});
       if(!user) return -1;
       return user;
     } catch (error) {
       console.log(error);
       return -2;
     }
-  }
+  }*/
 };
