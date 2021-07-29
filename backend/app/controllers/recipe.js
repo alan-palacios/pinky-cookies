@@ -1,6 +1,7 @@
 const Recipe = require("../models/recipe");
 const HashtagController = require ("../controllers/hashtag");
 const UserController = require ("../controllers/user");
+const RecipesGroup = require("../controllers/recipesGroup");
 module.exports = {
   
   /*getRecipeById: async function (id) {
@@ -33,10 +34,10 @@ module.exports = {
       return -3;
     }
   },*/
-  addRecipe: async (user, data) => {
+  addRecipeCreated: async (user, data) => {
     try {
       data.likes = 0;
-      data.creationDate = Date.now();
+      data.creationDate = new Date();
       data.creator = {
         userId: user._id,
         username: user.username,
@@ -58,12 +59,12 @@ module.exports = {
         });
       }
 
-
-      let recipe = await new Recipe(data).save();
-
-      const recipeAdd = await UserController.updateUserRecipes(user._id, recipe._id);
-      if(user?._id) return recipe;
-      return user;
+      const recipe = await new Recipe(data).save();
+      const recipeGroup = await RecipesGroup.addRecipeToGroup(user.createdRecipes.groupId, recipe._id, recipe.picture);
+      if(recipeGroup.recipes.length===1){//change groupPicture
+        await UserController.updateRecipesGroupPicture(user._id, 1, recipe.picture);
+      }
+      return recipe;
     } catch (error) {
       console.log(error);
       return -2;

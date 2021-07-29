@@ -49,6 +49,7 @@ module.exports = mongoose.model(
       picture: {
         type: String,
         required: true,
+        default: "default user picture url"
       },
     },
     likes: {
@@ -59,6 +60,7 @@ module.exports = mongoose.model(
     },
     picture: {
       type: String,
+      default:"default recipe picture url"
     },
     steps: [
       {

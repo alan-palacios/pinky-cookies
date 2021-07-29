@@ -3,13 +3,15 @@ const User = require("../models/user");
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const recipesGroupController = require("./recipesGroup");
+
+const userQuery ="_id username email type picture likedRecipes createdRecipes recipesGroups"; 
 module.exports = {
   
   getUserById: async function (id) {
     try {
       const user = await User.findOne(
         { _id: new mongoose.Types.ObjectId(id) },
-        "likedRecipes createdRecipes recipesGroups _id username email type"
+        userQuery
       );
       if (!user) return -1;
       else return user;
@@ -75,7 +77,7 @@ module.exports = {
 
       user = await User.findByIdAndUpdate(user._id, 
             {createdRecipes:createdGroup, likedRecipes:likedGroup},
-            {new:true, select: "likedRecipes createdRecipes recipesGroups _id username email type"} ) 
+            {new:true, select: userQuery} ) 
       if(user === -2)return -2;
 
       return user;
@@ -92,7 +94,7 @@ module.exports = {
           email: data.email,
           picture: data.picture,
         },
-      }, {new:true, select: "likedRecipes createdRecipes recipesGroups _id username email type"});
+      }, {new:true, select: userQuery});
       if (!user) return -1;
       else return user;
     } catch (error) {
@@ -109,7 +111,7 @@ module.exports = {
           $set: {
             password: data.newPassword
           },
-        }, {new:true, select: "likedRecipes createdRecipes recipesGroups _id username email type"});
+        }, {new:true, select: userQuery});
         return user;
       }
     } catch (error) {
@@ -119,7 +121,7 @@ module.exports = {
   },
   deleteUser: async (id) => {
     try {
-      const user = await User.findByIdAndDelete(id, {select: "likedRecipes createdRecipes recipesGroups _id username email type"});
+      const user = await User.findByIdAndDelete(id, {select: userQuery});
       if (!user) return -1;
       else return user;
     } catch (error) {
@@ -127,13 +129,22 @@ module.exports = {
       return -2;
     }
   },
-  updateUserRecipes: async (userId, recipeId) => {
+  updateRecipesGroupPicture: async (userId, type, recipeUrl) => {
     try {
-      let user = await User.findByIdAndUpdate(userId, {
-          $push: {
-            createdRecipes:new mongoose.Types.ObjectId(recipeId) 
-          },
-        }, {new:true, select: "likedRecipes createdRecipes recipesGroups _id username email type"});
+      let user;
+      if(type===1){
+         user = await User.findByIdAndUpdate(userId, {
+            $set: {
+              'createdRecipes.picture': recipeUrl
+            }
+          }, {new:true, select: userQuery});
+      }else{
+         user = await User.findByIdAndUpdate(userId, {
+            $set: {
+              'likedRecipes.picture': recipeUrl
+            }
+          }, {new:true, select: userQuery});
+      }
       if(!user) return -1;
       return user;
     } catch (error) {

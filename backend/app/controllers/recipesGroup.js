@@ -40,7 +40,30 @@ module.exports = {
       console.log(error);
       return -2;
     }
-  } /*,
+  } ,
+  addRecipeToGroup: async (groupId, recipeId, recipeUrl) => {
+    try {
+      let recipesGroup = await RecipesGroup.findByIdAndUpdate(groupId , {
+          $push: {
+            recipes:new mongoose.Types.ObjectId(recipeId) 
+          },
+        }, {new:true});
+
+      if(recipesGroup.recipes.length===1){
+        recipesGroup = await RecipesGroup.findByIdAndUpdate(groupId , {
+          $set: {
+            picture: recipeUrl
+          }
+        }, {new:true});        
+      }
+      return recipesGroup;
+    } catch (error) {
+      console.log(error);
+      return -2;
+    }
+  }
+  /*,
+
   updateUser: async (id, data) => {
     try {
       const user = await User.findByIdAndUpdate(id, {

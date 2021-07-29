@@ -5,9 +5,9 @@ const RecipeController = require('../controllers/recipe');
 //add recipe
 router.post('/', async (req, resp, next) => {
 
-    if( req.session.user?._id && req.session.user?.type===1){
+    if( req.session.user?._id){
         if(req.body != null ){
-            const response = await RecipeController.addRecipe(req.session.user, req.body);
+            const response = await RecipeController.addRecipeCreated(req.session.user, req.body);
             return manageResponse(response, resp);
         }else{
             return resp.status(400).json({status:"error", description:"Wrong parameters"});
