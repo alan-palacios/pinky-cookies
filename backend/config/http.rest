@@ -87,3 +87,17 @@ Content-Type: application/json
             "dessert", "cake"
     ]
 }
+
+### add recipesGroup
+POST http://localhost:5000/recipesGroups/
+Content-Type: application/json
+
+{
+    "groupName": "first custom recipes Group",
+    "public": false,
+    "recipe": 
+      {
+        "recipeId": "6101f1f233409278349a0797",
+        "picture": "recipe picture"
+      }
+}

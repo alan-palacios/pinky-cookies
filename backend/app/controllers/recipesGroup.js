@@ -1,5 +1,8 @@
 const mongoose = require("mongoose");
 const RecipesGroup = require("../models/recipesGroup");
+const User = require("../models/user");
+const userQuery ="_id username email type picture likedRecipes createdRecipes recipesGroups"; 
+
 module.exports = {
  /* 
   getUserById: async function (id) {
@@ -41,6 +44,31 @@ module.exports = {
       return -2;
     }
   } ,
+  addCommonRecipesGroup: async (user, data) => {
+    try {
+      user.userId = user._id;
+      const recipesGroupToAdd = {
+          groupName: data.groupName, 
+          type: 0,
+          public: data.public,
+          creator: user,
+          picture: data.recipe.picture,
+          recipes: [data.recipe.recipeId]
+      };
+
+      const recipesGroup = await new RecipesGroup(recipesGroupToAdd).save();
+      const userUpdated = await User.findByIdAndUpdate(user._id, {
+            $push: {
+              recipesGroups: recipesGroup._id
+            }
+        }, {new:true, select: userQuery});
+
+      return recipesGroup;
+    } catch (error) {
+      console.log(error);
+      return -2;
+    }
+  },
   addRecipeToGroup: async (groupId, recipeId, recipeUrl) => {
     try {
       let recipesGroup = await RecipesGroup.findByIdAndUpdate(groupId , {
